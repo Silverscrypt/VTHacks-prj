@@ -1,4 +1,5 @@
 import { useState } from "react";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -6,10 +7,7 @@ function App() {
   return (
     <>
       <div>
-        <p>Hello World!</p>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <HomePage />
       </div>
     </>
   );
