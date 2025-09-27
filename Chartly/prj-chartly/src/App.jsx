@@ -8,6 +8,18 @@ function App() {
   const [error, setError] = useState(null);
 
   async function handleUpload(file) {
+    // Accept CSV and Excel files
+    const allowedTypes = [
+      "text/csv",
+      "application/vnd.ms-excel", // .xls
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" // .xlsx
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      setError("Please upload a CSV or Excel file (.csv, .xls, .xlsx).");
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setAnalysis(null);
@@ -16,7 +28,7 @@ function App() {
       const formData = new FormData();
       formData.append("file", file);
 
-      // backend API — adjust if deployed
+      // backend API — adjust URL if deployed
       const res = await fetch("http://localhost:5000/api/upload", {
         method: "POST",
         body: formData,
