@@ -12,6 +12,17 @@ function App() {
     setError(null);
     setAnalysis(null);
 
+    const allowedTypes = [
+      "text/csv",
+      "application/vnd.ms-excel", // .xls
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      setError("Please upload a CSV or Excel file (.csv, .xls, .xlsx).");
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("file", file);

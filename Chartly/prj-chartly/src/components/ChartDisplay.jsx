@@ -1,7 +1,7 @@
 import Plot from "react-plotly.js";
 
 function ChartDisplay({ chartData, explanation }) {
-  if (!chartData) {
+  if (!chartData || !chartData.data || chartData.data.length === 0) {
     return <p className="mt-4 text-gray-600">No chart to display yet.</p>;
   }
 
@@ -14,7 +14,7 @@ function ChartDisplay({ chartData, explanation }) {
           autosize: true,
           margin: { t: 40, r: 20, l: 40, b: 40 },
         }}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "400px" }} // fixed height
       />
 
       {explanation && (
