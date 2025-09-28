@@ -14,12 +14,13 @@ function App() {
 
     const allowedTypes = [
       "text/csv",
-      "application/vnd.ms-excel", // .xls
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ];
 
     if (!allowedTypes.includes(file.type)) {
       setError("Please upload a CSV or Excel file (.csv, .xls, .xlsx).");
+      setLoading(false);
       return;
     }
 
@@ -27,7 +28,6 @@ function App() {
       const formData = new FormData();
       formData.append("file", file);
 
-      // backend API — adjust if deployed
       const res = await fetch("http://localhost:5000/api/upload", {
         method: "POST",
         body: formData,
@@ -45,20 +45,30 @@ function App() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">Chartly</h1>
+    <div className="min-h-screen bg-gradient-to-b from-blue-600 to-purple-950 py-10">
+      <div className="max-w-5xl mx-auto px-4">
+        <h1 className="text-4xl font-extrabold text-center mb-8 text-slate-300">
+          Chartly
+        </h1>
 
-      <FileUpload onUpload={handleUpload} />
+        <FileUpload onUpload={handleUpload} />
 
-      {loading && <p className="text-blue-600 mt-4">Analyzing data...</p>}
-      {error && <p className="text-red-600 mt-4">{error}</p>}
+        {loading && (
+          <p className="text-blue-600 mt-4 text-center font-medium animate-pulse">
+            Analyzing data...
+          </p>
+        )}
+        {error && (
+          <p className="text-red-600 mt-4 text-center font-medium">{error}</p>
+        )}
 
-      {analysis && (
-        <ChartDisplay
-          chartData={analysis.chart}
-          explanation={analysis.explanation}
-        />
-      )}
+        {analysis && (
+          <ChartDisplay
+            chartData={analysis.chart}
+            explanation={analysis.explanation}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -2,30 +2,25 @@ function FileUpload({ onUpload }) {
   const handleChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    // Allowed MIME types for CSV and Excel
-    const allowedTypes = [
-      "text/csv",
-      "application/vnd.ms-excel", // .xls
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
-    ];
-
-    // Check if the file type is among allowed types
-    if (!allowedTypes.includes(file.type)) {
-      alert("Please upload a CSV or Excel file (.csv, .xls, .xlsx)");
-      return;
-    }
-
     onUpload(file);
   };
 
   return (
-    <div className="border-2 border-dashed rounded-xl p-6 text-center">
-      <p className="mb-2 text-gray-700">
-        Upload a CSV or Excel file to generate charts
-      </p>
-      <input type="file" accept=".csv,.xls,.xlsx" onChange={handleChange} />
-    </div>
+    <label
+      className="block w-full cursor-pointer border-2 border-dashed rounded-xl p-6 text-center bg-white
+  hover:bg-indigo-50 hover:border-indigo-600 hover:shadow-2xl [box-shadow:0_18px_50px_rgba(15,23,42,0.45)] transform hover:-translate-y-0.5
+        transition duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
+    >
+      <span className="text-gray-700">
+        Click or drag a file here to upload (.csv, .xls, .xlsx)
+      </span>
+      <input
+        type="file"
+        accept=".csv,.xls,.xlsx"
+        className="hidden"
+        onChange={handleChange}
+      />
+    </label>
   );
 }
 
